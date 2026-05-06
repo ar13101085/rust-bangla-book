@@ -18,10 +18,17 @@ const { dependencies = {}, devDependencies = {} } = pkg as any as {
 errorOnDuplicatesPkgDeps(devDependencies, dependencies);
 
 /**
+ * Base path for deployment. Defaults to "/" for local dev.
+ * CI sets BASE_URL=/<repo-name>/ for GitHub Pages project sites.
+ */
+const basePath = process.env.BASE_URL ?? "/";
+
+/**
  * Note that Vite normally starts from `index.html` but the qwikCity plugin makes start at `src/entry.ssr.tsx` instead.
  */
 export default defineConfig(({ command, mode }): UserConfig => {
   return {
+    base: basePath,
     plugins: [qwikCity(), qwikVite(), tsconfigPaths({ root: "." }), tailwindcss()],
     // This tells Vite which dependencies to pre-build in dev mode.
     optimizeDeps: {

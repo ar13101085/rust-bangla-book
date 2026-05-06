@@ -12,7 +12,7 @@ export default extendConfig(baseConfig, () => {
     },
     plugins: [
       staticAdapter({
-        origin: "https://rust-course-bangla.local",
+        origin: process.env.ORIGIN ?? "https://rust-course-bangla.local",
       }),
     ],
   };
